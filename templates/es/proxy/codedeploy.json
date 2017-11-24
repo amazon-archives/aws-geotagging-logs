@@ -1,0 +1,24 @@
+{"app":{
+    "Type" : "AWS::CodeDeploy::Application",
+    "Properties" : {}
+},
+"group":{
+    "Type" : "AWS::CodeDeploy::DeploymentGroup",
+    "DependsOn":"ServerSelfSG",
+    "Properties" : {
+        "ApplicationName" : {"Ref":"app"},
+        "AutoScalingGroups" : [{"Ref":"ScalingGroup"}],
+        "DeploymentConfigName" : "CodeDeployDefault.AllAtOnce",
+        "ServiceRoleArn" : {"Fn::GetAtt":["CodeDeployRole","Arn"]},
+        "Deployment":{
+            "Revision":{
+                "RevisionType" : "S3",
+                "S3Location" : {
+                    "Key":"codedeploy/proxy.zip",
+                    "Bucket":{"Ref":"BootstrapBucket"},
+                    "BundleType":"zip"
+                }
+            }
+        }
+    }
+}}

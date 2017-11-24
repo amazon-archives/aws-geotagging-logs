@@ -1,0 +1,33 @@
+{
+  "Resources": {
+    "Domain":{
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+            "TemplateURL" : {"Fn::Join":["/",[
+                "https://s3.amazonaws.com",
+                {"Fn::ImportValue":"VMWARE-BOOTSTRAP-BUCKET"},
+                "templates/domain.json"
+            ]]},
+            "Parameters":{
+                "BootstrapBucket":{"Fn::ImportValue":"VMWARE-BOOTSTRAP-BUCKET"}
+            }
+        }
+    }
+  },
+  "Conditions": {},
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "ElasticSearch dev cluster for VMWARE demo",
+  "Mappings": {},
+  "Outputs": {
+    "Arn":{
+        "Value":{"Fn::GetAtt":["Domain","Outputs.Arn"]}
+    },
+    "Address":{
+        "Value":{"Fn::GetAtt":["Domain","Outputs.Address"]}
+    },
+    "Policy":{
+        "Value":{"Fn::GetAtt":["Domain","Outputs.Policy"]}
+    }
+  },
+  "Parameters": {}
+}

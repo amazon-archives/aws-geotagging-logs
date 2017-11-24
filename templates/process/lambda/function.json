@@ -1,0 +1,37 @@
+{
+"IngestLogStream" :{
+    "Type" : "AWS::Logs::LogStream",
+    "Properties" : {
+        "LogGroupName" : {"Ref":"LogGroup"},
+        "LogStreamName": "Ingest-Errors"
+    }
+},
+"Lambda":{
+    "Type" : "AWS::Lambda::Function",
+    "Properties" : {
+        "Code" :{
+            "S3Bucket" : {"Ref":"BootstrapBucket"},
+            "S3Key" : "lambda/geotag.zip"
+        },
+        "Environment" :{
+            "Variables":{
+                "FLOWLOGSHOSE":{"Ref":"FlowlogsHose"},
+                "CLOUDTRAILHOSE":{"Ref":"CloudtrailHose"},
+                "CLOUDFRONTHOSE":{"Ref":"CloudfrontHose"},
+                "ELBHOSE":{"Ref":"ELBHose"},
+                "LOG_GROUP":{"Ref":"LogGroup"},
+                "LOG_STREAM":{"Ref":"IngestLogStream"}
+            }
+        },
+        "Handler" : "index.handler",
+        "MemorySize" : "256",
+        "Role" : {"Fn::GetAtt":["LambdaRole","Arn"]},
+        "Runtime" : "nodejs6.10",
+        "Timeout" : 60,
+        "Tags":[{
+            "Key":"name",
+            "Value":"vmware-geotag"
+        }]
+    }
+}
+}

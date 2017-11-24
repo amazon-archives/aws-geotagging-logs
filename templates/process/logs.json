@@ -1,0 +1,8 @@
+{
+"KinesisLogs": {
+    "Type": "AWS::Logs::LogStream",
+    "Properties": {
+        "LogGroupName" : {"Ref":"LogGroup"},
+        "LogStreamName": "S3KinesisLogs"
+    }
+}}

@@ -1,0 +1,250 @@
+[
+  {
+    "_id": "main",
+    "_type": "dashboard",
+    "_source": {
+      "title": "main",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"Cloudtrail-Error-by-Country\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":4,\"size_y\":3,\"col\":1,\"row\":1},{\"id\":\"Security-Group-Actions\",\"type\":\"visualization\",\"panelIndex\":2,\"size_x\":4,\"size_y\":2,\"col\":1,\"row\":6},{\"id\":\"map\",\"type\":\"visualization\",\"panelIndex\":4,\"size_x\":8,\"size_y\":7,\"col\":5,\"row\":1},{\"id\":\"security-groups-ports\",\"type\":\"visualization\",\"panelIndex\":5,\"size_x\":4,\"size_y\":2,\"col\":1,\"row\":4}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-4\":{\"mapCenter\":[24.206889622398023,-7.207031249999999],\"mapZoom\":2},\"P-2\":{\"vis\":{\"legendOpen\":false}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "test",
+    "_type": "dashboard",
+    "_source": {
+      "title": "test",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"map\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":3,\"size_y\":2,\"col\":1,\"row\":1}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"mapCenter\":[39.90973623453719,-92.10937499999999],\"mapZoom\":2}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "CloudFront-Dashboard",
+    "_type": "dashboard",
+    "_source": {
+      "title": "CloudFront Dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"CloudFront-Application-Access\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":7,\"size_y\":7,\"col\":1,\"row\":1},{\"id\":\"CloudFront-Access-Location\",\"type\":\"visualization\",\"panelIndex\":2,\"size_x\":5,\"size_y\":3,\"col\":8,\"row\":1}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"mapCenter\":[14.604847155053898,0.3515625]},\"P-2\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "CloudTrail-Dashboard",
+    "_type": "dashboard",
+    "_source": {
+      "title": "CloudTrail Dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"CloudTrail-Console-Logins\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":5,\"size_y\":5,\"col\":1,\"row\":1},{\"id\":\"Cloudtrail-Error-by-Country\",\"type\":\"visualization\",\"panelIndex\":2,\"size_x\":5,\"size_y\":5,\"col\":7,\"row\":1}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "FlowLogs-Dashboard",
+    "_type": "dashboard",
+    "_source": {
+      "title": "FlowLogs Dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"FlowLogs-SSH-Probing\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":7,\"size_y\":6,\"col\":1,\"row\":1}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"mapCenter\":[14.944784875088372,0]}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "Application-Access",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Application Access",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"id\":\"CloudFront-Application-Access\",\"type\":\"visualization\",\"panelIndex\":1,\"size_x\":3,\"size_y\":2,\"col\":1,\"row\":1}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}}}]}"
+      }
+    }
+  },
+  {
+    "_id": "CloudTrail-Console-Logins",
+    "_type": "search",
+    "_source": {
+      "title": "CloudTrail - Console Logins",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "eventTime",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"_type:cloudtrail AND eventName: ConsoleLogin\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+      }
+    }
+  },
+  {
+    "_id": "CloudFront-Application-Access",
+    "_type": "visualization",
+    "_source": {
+      "title": "CloudFront - Application Access",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"autoPrecision\":true,\"field\":\"src_geoip.location\"},\"schema\":\"segment\",\"type\":\"geohash_grid\"}],\"listeners\":{},\"params\":{\"addTooltip\":true,\"heatBlur\":15,\"heatMaxZoom\":16,\"heatMinOpacity\":0.1,\"heatNormalizeData\":true,\"heatRadius\":25,\"isDesaturated\":true,\"legendPosition\":\"bottomright\",\"mapCenter\":[15,5],\"mapType\":\"Scaled Circle Markers\",\"mapZoom\":2,\"wms\":{\"enabled\":true,\"options\":{\"attribution\":\"Maps provided by USGS\",\"format\":\"image/png\",\"layers\":\"0\",\"styles\":\"\",\"transparent\":true,\"version\":\"1.3.0\"},\"url\":\"https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer\"}},\"title\":\"CloudFront - Application Access\",\"type\":\"tile_map\"}",
+      "uiStateJSON": "{\"mapCenter\":[14.944784875088372,0]}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:cloudfront\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "map",
+    "_type": "visualization",
+    "_source": {
+      "title": "map",
+      "visState": "{\"title\":\"map\",\"type\":\"tile_map\",\"params\":{\"addTooltip\":true,\"heatBlur\":\"17\",\"heatMaxZoom\":\"16\",\"heatMinOpacity\":\"0.51\",\"heatNormalizeData\":true,\"heatRadius\":\"15\",\"isDesaturated\":true,\"legendPosition\":\"topleft\",\"mapCenter\":[15,5],\"mapType\":\"Heatmap\",\"mapZoom\":2,\"wms\":{\"enabled\":true,\"options\":{\"attribution\":\"Maps provided by USGS\",\"format\":\"image/png\",\"layers\":\"0\",\"styles\":\"\",\"transparent\":true,\"version\":\"1.3.0\"},\"url\":\"https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer\"}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"geohash_grid\",\"schema\":\"segment\",\"params\":{\"field\":\"src_geoip.location\",\"autoPrecision\":false,\"precision\":6}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"mapCenter\":[2.986927393334876,-8.701171874999998],\"mapZoom\":3}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Security-Group-Actions",
+    "_type": "visualization",
+    "_source": {
+      "title": "Security Group Actions",
+      "visState": "{\"title\":\"Security Group Actions\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"left\",\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"securityGroups\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Security group\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"action\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Status\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"legendOpen\":true}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Cloudtrail-Error-by-Country",
+    "_type": "visualization",
+    "_source": {
+      "title": "Cloudtrail Error by Country",
+      "visState": "{\"title\":\"Cloudtrail Error by Country\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"src_geoip.country_name\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"errorCode.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"_type:cloudtrail\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Source-Country-Word-Cloud",
+    "_type": "visualization",
+    "_source": {
+      "title": "Source Country Word Cloud",
+      "visState": "{\"title\":\"Source Country Word Cloud\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"log\",\"orientation\":\"right angled\",\"minFontSize\":11,\"maxFontSize\":72},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"src_geoip.country_name\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "security-groups-ports",
+    "_type": "visualization",
+    "_source": {
+      "title": "security groups ports",
+      "visState": "{\"title\":\"security groups ports\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"securityGroups\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"src_port\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "FlowLogs-SSH-Probing",
+    "_type": "visualization",
+    "_source": {
+      "title": "FlowLogs - SSH Probing",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"autoPrecision\":true,\"field\":\"src_geoip.location\"},\"schema\":\"segment\",\"type\":\"geohash_grid\"}],\"listeners\":{},\"params\":{\"addTooltip\":true,\"heatBlur\":15,\"heatMaxZoom\":16,\"heatMinOpacity\":0.1,\"heatNormalizeData\":true,\"heatRadius\":25,\"isDesaturated\":true,\"legendPosition\":\"bottomright\",\"mapCenter\":[15,5],\"mapType\":\"Scaled Circle Markers\",\"mapZoom\":2,\"wms\":{\"enabled\":true,\"options\":{\"attribution\":\"Maps provided by USGS\",\"format\":\"image/png\",\"layers\":\"0\",\"styles\":\"\",\"transparent\":true,\"version\":\"1.3.0\"},\"url\":\"https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer\"}},\"title\":\"FlowLogs - SSH Probing\",\"type\":\"tile_map\"}",
+      "uiStateJSON": "{\"mapCenter\":[14.944784875088372,0]}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"_type:flowlogs AND dst_port:22\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "CloudTrail-Console-Logins",
+    "_type": "visualization",
+    "_source": {
+      "title": "CloudTrail - Console Logins",
+      "visState": "{\"title\":\"CloudTrail - Console Logins\",\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"eventTime\",\"interval\":\"h\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"eventName\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"query\":\"_type:cloudtrail AND eventName:ConsoleLogin\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "CloudFront-Access-Location",
+    "_type": "visualization",
+    "_source": {
+      "title": "CloudFront - Access Location",
+      "visState": "{\"title\":\"CloudFront - Access Location\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":null,\"direction\":null},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"src_ip\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Source IP\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"src_geoip.city_name\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"City Name\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"src_geoip.country_name\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Country Name\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":null,\"direction\":null}}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"geotag-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"_type:cloudfront\"}},\"filter\":[]}"
+      }
+    }
+  }
+]

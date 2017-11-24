@@ -1,0 +1,7 @@
+{"Logs":{
+    "Type" : "AWS::Logs::LogGroup",
+    "DeletionPolicy":"Delete",
+    "Properties" : {
+        "RetentionInDays" : 1
+    }
+}}

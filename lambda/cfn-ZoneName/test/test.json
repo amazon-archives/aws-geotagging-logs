@@ -1,0 +1,9 @@
+{
+  "StackId": "stackid",
+  "ResponseURL": "http://localhost:8000",
+  "ResourceProperties": {},
+  "RequestType": "Create",
+  "ResourceType": "Custom::SQL",
+  "RequestId": "unique id for this create request",
+  "LogicalResourceId": "MyTestResource"
+}

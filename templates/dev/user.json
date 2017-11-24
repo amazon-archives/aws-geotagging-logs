@@ -1,0 +1,91 @@
+{
+  "Resources": {
+    "lambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+          "S3Key": "lambda/cfn-user.zip"
+        },
+        "Environment": {
+          "Variables": {
+            "REGION": {"Ref": "AWS::Region"},
+            "POOLID":{"Fn::ImportValue":"GEOTAG-COGNITO-POOL-ID"},
+            "CLIENT":{"Fn::ImportValue":"GEOTAG-COGNITO-CLIENT"},
+            "USERPOOL":{"Fn::ImportValue":"GEOTAG-COGNITO-USER-POOL"}
+          }
+        },
+        "Handler": "index.handler",
+        "MemorySize": "128",
+        "Role": {"Fn::GetAtt": ["Role","Arn"]
+        },
+        "Runtime": "nodejs6.10",
+        "Timeout": 60
+      }
+    },
+    "Policy": {
+      "Type": "AWS::IAM::ManagedPolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cognito-idp:AdminCreateUser",
+                "cognito-idp:AdminDeleteUser",
+                "cognito-idp:AdminInitiateAuth",
+                "cognito-idp:AdminRespondToAuthChallenge"
+              ],
+              "Resource": ["*"]
+            }
+          ]
+        }
+      }
+    },
+    "Role": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Path": "/",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+          {"Ref": "Policy"}
+        ]
+      }
+    },   
+    "User":{
+        "Type": "Custom::CognitoUser",
+        "Properties": {
+            "ServiceToken": { "Fn::GetAtt" : ["lambda", "Arn"] },
+            "username":"User",
+            "password":"adasd3afasdfDD&D"
+        }
+    }
+  },
+  "Conditions": {},
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "creates user to test poxy login",
+  "Mappings": {},
+  "Outputs": {
+    "Username":{
+        "Value":"User",
+        "Export":{"Name":"GEOTAG-DEV-USER"}
+    },
+    "Password":{
+        "Value":"adasd3afasdfDD&D",
+        "Export":{"Name":"GEOTAG-DEV-PASSWORD"}
+    }
+  }
+}

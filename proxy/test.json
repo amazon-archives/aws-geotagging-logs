@@ -1,0 +1,8 @@
+{
+    "port":8000,
+    "region":"us-west-2",
+    "address":"search-vmware-domain-1i31w7nfuybph-bgmysz5duegzcernckiku3udmu.us-west-2.es.amazonaws.com",
+    "userPool":"us-west-2_dsbnwBdJO",
+    "client":"3h44qq2p814eq0bm8src2dj91s"
+}
+

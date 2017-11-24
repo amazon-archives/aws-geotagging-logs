@@ -1,0 +1,53 @@
+{"ServerSG":{
+  "Type" : "AWS::EC2::SecurityGroup",
+  "Properties" : {
+     "GroupDescription" : "webserver security group",
+     "SecurityGroupIngress" : [
+        {
+        "SourceSecurityGroupId":{"Ref":"ELBSG"},
+        "FromPort" : "8000",
+        "ToPort" : "8000",
+        "IpProtocol" : "tcp"
+        },
+        {
+        "SourceSecurityGroupId":{"Ref":"ELBSG"},
+        "FromPort" : "8001",
+        "ToPort" : "8001",
+        "IpProtocol" : "tcp"
+        }
+     ],
+     "VpcId" : {"Ref":"VPC"}
+  }
+},
+"ServerSelfSG":{
+  "Type" : "AWS::EC2::SecurityGroupIngress",
+    "Properties" : {
+        "SourceSecurityGroupId":{"Ref":"ServerSG"},
+        "FromPort" : "8000",
+        "ToPort" : "8000",
+        "IpProtocol" : "tcp",
+        "GroupId":{"Ref":"ServerSG"}
+    }
+},
+"ELBSG":{
+  "Type" : "AWS::EC2::SecurityGroup",
+  "Properties" : {
+     "GroupDescription" : "ELB security group",
+     "SecurityGroupIngress" : [
+        {
+        "CidrIp":"0.0.0.0/0",
+        "FromPort" : "80",
+        "ToPort" : "80",
+        "IpProtocol" : "tcp"
+        },
+        {
+        "CidrIp":"0.0.0.0/0",
+        "FromPort" : "443",
+        "ToPort" : "443",
+        "IpProtocol" : "tcp"
+        }
+     ],
+     "VpcId" : {"Ref":"VPC"}
+  }
+}
+}

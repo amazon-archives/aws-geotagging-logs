@@ -1,0 +1,165 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+"Description": "Dev log resources",
+"Outputs": {
+    "DataBucket":{
+        "Value":{"Ref":"DataBucket"},
+        "Export":{
+            "Name":"GEOTAG-DEV-DATA-BUCKET"
+        }
+    },
+    "URL":{
+        "Value":{"Fn::GetAtt":["ELB","DNSName"]},
+        "Export":{
+            "Name":"GEOTAG-DEV-ELB-URL"
+        }
+    }
+},
+"Resources":{
+    "Traffic":{
+        "Type" : "AWS::Route53::HealthCheck",
+        "Properties" : {
+            "HealthCheckConfig" :{
+                "FailureThreshold" : "5",
+                "FullyQualifiedDomainName" : {"Fn::GetAtt":["ELB","DNSName"]},
+                "ResourcePath" : "/",
+                "Type" : "HTTP"
+            }
+        }
+    },
+    "DataBucket":{
+       "Type": "AWS::S3::Bucket",
+        "Properties": {}
+    },
+    "LaunchConfig":{
+       "Type" : "AWS::AutoScaling::LaunchConfiguration",
+       "Properties" : {
+          "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "ami"]},
+          "InstanceType" :"t2.nano",
+          "SecurityGroups" : [{"Ref":"ServerSG"}],
+          "AssociatePublicIpAddress":true,
+          "UserData" :{ "Fn::Base64" : { "Fn::Join" : ["\n", [
+            "#!/bin/bash -xe",
+            "yum update -y",
+            "sudo yum -y install httpd",
+            "sudo service httpd start ",
+            "chkconfig httpd on"
+        ]]}}
+       }
+    },
+    "ScalingGroup":{
+        "Type" : "AWS::AutoScaling::AutoScalingGroup",
+        "Properties" : {
+            "HealthCheckType" : "ELB",
+            "LaunchConfigurationName" : {"Ref":"LaunchConfig"},
+            "HealthCheckGracePeriod":"300",
+            "LoadBalancerNames" :[{"Ref":"ELB"}],
+            "DesiredCapacity" : 1,
+            "MaxSize" : 1,
+            "MinSize" : 1,
+            "VPCZoneIdentifier" : [
+                {"Fn::ImportValue":"GEOTAG-DEV-SUBNET-1"},
+                {"Fn::ImportValue":"GEOTAG-DEV-SUBNET-2"}
+            ]
+        }
+    },
+    "ELB":{
+        "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+        "DependsOn":"BucketPolicy",
+        "Properties": {
+            "AccessLoggingPolicy":{
+                "Enabled":true,
+                "S3BucketName":{"Ref":"DataBucket"}
+            },
+            "HealthCheck" : {
+                "HealthyThreshold" : "2",
+                "Interval" : "30",
+                "Target" : "HTTPS:8000/health",
+                "Timeout" : "10",
+                "UnhealthyThreshold" : "10"
+            },
+            "Listeners" : [{
+                "InstancePort" : "80",
+                "InstanceProtocol" : "HTTP",
+                "LoadBalancerPort" : "80",
+                "Protocol" : "HTTP"
+            }],
+            "SecurityGroups" : [{"Ref":"ELBSG"}],
+            "Subnets" : [
+                {"Fn::ImportValue":"GEOTAG-DEV-SUBNET-1"},
+                {"Fn::ImportValue":"GEOTAG-DEV-SUBNET-2"}
+            ]
+        }
+    },
+    "ServerSG":{
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+         "GroupDescription" : "webserver security group",
+         "SecurityGroupIngress" : [{
+            "SourceSecurityGroupId":{"Ref":"ELBSG"},
+            "FromPort" : "80",
+            "ToPort" : "80",
+            "IpProtocol" : "tcp"
+         }],
+         "VpcId" : {"Fn::ImportValue":"GEOTAG-DEV-VPC"}
+      }
+    },
+    "ELBSG":{
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+         "GroupDescription" : "ELB security group",
+         "SecurityGroupIngress" : [
+            {
+            "CidrIp":"0.0.0.0/0",
+            "FromPort" : "80",
+            "ToPort" : "80",
+            "IpProtocol" : "tcp"
+            }
+         ],
+         "VpcId" : {"Fn::ImportValue":"GEOTAG-DEV-VPC"}
+      }
+    },
+    "BucketPolicy":{
+        "Type" : "AWS::S3::BucketPolicy",
+        "Properties" : {
+            "Bucket" : {"Ref":"DataBucket"},
+            "PolicyDocument" : {
+                "Version":"2012-10-17",
+                "Statement":[{
+                    "Sid":"internal",
+                    "Effect":"Allow",
+                    "Principal": {"AWS":{"Ref":"AWS::AccountId"}},
+                    "Action":"s3:*",
+                    "Resource":[
+                        {"Fn::Join":["",[
+                            "arn:aws:s3:::",{"Ref":"DataBucket"},"/*"
+                        ]]},
+                        {"Fn::Join":["",[
+                            "arn:aws:s3:::",{"Ref":"DataBucket"}
+                        ]]}
+                    ]
+                },{
+                    "Sid":"ELB",
+                    "Effect":"Allow",
+                    "Principal": {"AWS":{ "Fn::FindInMap" : 
+                        [ "RegionMap", { "Ref" : "AWS::Region" }, "ELBAccount"]
+                    }},
+                    "Action":"s3:putObject",
+                    "Resource":{"Fn::Join":["",[
+                        "arn:aws:s3:::",{"Ref":"DataBucket"},"/*"
+                    ]]}
+                }]
+            }
+        }
+    }
+},
+"Mappings":{
+    "RegionMap" : {
+      "us-east-1"      : { "ami" : "ami-a4c7edb2","ELBAccount":"127311923021" },
+      "us-east-2"      : { "ami" : "ami-8a7859ef","ELBAccount":"033677994240" },
+      "us-west-1"      : { "ami" : "ami-327f5352","ELBAccount":"027434742980" },
+      "us-west-2"      : { "ami" : "ami-6df1e514","ELBAccount":"797873946194" },
+      "eu-west-1"      : { "ami" : "ami-d7b9a2b1","ELBAccount":"156460612806" }
+    }
+}
+}

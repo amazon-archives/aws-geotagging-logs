@@ -1,0 +1,21 @@
+{"KinesisRole" : {
+    "Type"  : "AWS::IAM::Role",
+    "Properties" : {
+        "AssumeRolePolicyDocument" : {
+            "Version": "2012-10-17",
+            "Statement": [{
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "firehose.amazonaws.com"
+                },
+                "Action": "sts:AssumeRole"
+            }]       
+        },
+        "Path" : "/",
+        "ManagedPolicyArns":[
+            {"Ref":"LogPolicy"},
+            {"Ref":"FireHoseBucketPolicy"}
+        ]
+    }
+}
+}

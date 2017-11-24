@@ -1,0 +1,56 @@
+{
+    "FlowLogGroup":{
+        "Type" : "AWS::Logs::LogGroup",
+        "Properties" : {
+            "RetentionInDays" : 1
+        }
+    },
+    "FlowLog":{
+        "Type" : "AWS::EC2::FlowLog",
+        "DependsOn":"FlowLogPolicy",
+        "Properties" : {
+            "DeliverLogsPermissionArn" : {"Fn::GetAtt":["FlowLogRole","Arn"]},
+            "LogGroupName" : {"Ref":"FlowLogGroup"},
+            "ResourceId" : {"Ref":"VPC"},
+            "ResourceType" : "VPC",
+            "TrafficType" : "ALL"
+        }
+    },
+    "FlowLogPolicy":{
+        "Type": "AWS::IAM::ManagedPolicy",
+        "Properties": {
+            "PolicyDocument":{
+                "Version": "2012-10-17",
+                "Statement": [{      
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents",
+                    "logs:DescribeLogGroups",
+                    "logs:DescribeLogStreams"
+                  ],
+                  "Resource": [
+                    {"Fn::GetAtt":["FlowLogGroup","Arn"]}               
+                  ]
+                }]
+            },
+            "Roles":[{"Ref":"FlowLogRole"}]
+        }
+    },
+    "FlowLogRole":{
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+            "AssumeRolePolicyDocument": { 
+                "Statement": [{
+                    "Sid": "",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service":"vpc-flow-logs.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }]
+            }
+        }
+    }
+}

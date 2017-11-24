@@ -1,0 +1,48 @@
+{"ServerRole" : {
+    "Type"  : "AWS::IAM::Role",
+    "Properties" : {
+        "AssumeRolePolicyDocument" : {
+            "Statement" : [ {
+                "Effect" : "Allow",
+                "Principal" : {
+                    "Service" : [ "ec2.amazonaws.com" ]
+                },
+                "Action" : [ "sts:AssumeRole" ]
+            } ]
+        },
+        "Path" : "/",
+        "ManagedPolicyArns":[
+            "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess",
+            "arn:aws:iam::aws:policy/CloudWatchFullAccess",
+            "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforAWSCodeDeploy",
+            {"Ref":"LogPolicy"},
+            {"Ref":"CognitoLogPolicy"},
+            {"Ref":"ESPolicy"}
+        ]
+    }
+},
+"ServerProfile":{
+    "Type": "AWS::IAM::InstanceProfile",
+    "Properties": {
+        "Path": "/",
+        "Roles": [ {"Ref":"ServerRole"}]
+    }
+},
+"CodeDeployRole":{
+    "Type": "AWS::IAM::Role",
+    "Properties": {
+        "AssumeRolePolicyDocument": { 
+            "Statement": [{
+                "Sid": "",
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": ["codedeploy.amazonaws.com"]
+                },
+                "Action": "sts:AssumeRole"
+            }]
+        },
+        "ManagedPolicyArns": [ 
+            "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+        ]
+    }
+}}

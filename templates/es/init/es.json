@@ -1,0 +1,49 @@
+{
+    "Kibana":{
+        "Type": "Custom::kibana",
+        "Properties": {
+            "ServiceToken": { "Fn::GetAtt" : ["KibanaLambda", "Arn"] },
+            "ExportFile":{
+                "Bucket":{"Ref":"BootstrapBucket"},
+                "Key":"assets/kibana.json"
+            }
+        }
+    },
+    "Flowlogs":{
+        "Type": "Custom::EsInit",
+        "Properties": {
+            "ServiceToken": { "Fn::GetAtt" : ["ESLambda", "Arn"] },
+            "Address":{"Ref":"ESAddress"},
+            "Index":"geotag-flowlogs",
+            "Type":"flowlogs"
+        }
+    },
+    "Cloudtrail":{
+        "Type": "Custom::EsInit",
+        "Properties": {
+            "ServiceToken": { "Fn::GetAtt" : ["ESLambda", "Arn"] },
+            "Address":{"Ref":"ESAddress"},
+            "Index":"geotag-cloudtrail",
+            "Type":"cloudtrail"
+        }
+    },
+    "Cloudfront":{
+        "Type": "Custom::EsInit",
+        "Properties": {
+            "ServiceToken": { "Fn::GetAtt" : ["ESLambda", "Arn"] },
+            "Address":{"Ref":"ESAddress"},
+            "Index":"geotag-cloudfront",
+            "Type":"cloudfront"
+        }
+    },
+    "ELBIndex":{
+        "Type": "Custom::EsInit",
+        "Properties": {
+            "ServiceToken": { "Fn::GetAtt" : ["ESLambda", "Arn"] },
+            "Address":{"Ref":"ESAddress"},
+            "Index":"geotag-elb",
+            "Type":"elb"
+        }
+    }
+}
+ 

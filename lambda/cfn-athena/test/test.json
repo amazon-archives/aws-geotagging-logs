@@ -1,0 +1,9 @@
+{
+  "StackId": "stackid",
+  "ResponseURL": "https://localhost:8000",
+  "ResourceProperties": {},
+  "RequestType": "Create",
+  "ResourceType": "Custom::NamedQuery",
+  "RequestId": "unique id for this create request",
+  "LogicalResourceId": "MyTestResource"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "AWS_PROFILE=$(../../bin/profile.js) nodeunit ./test/index.js",
+    "unit": "AWS_PROFILE=$(../../bin/profile.js) nodeunit ./test/index.js -t"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "airport-lookup": "^1.1.0",
+    "elb-log-parser": "0.0.3",
+    "human-format": "^0.8.0",
+    "json-stringify-pretty-compact": "^1.0.4",
+    "lodash": "^4.17.4",
+    "maxmind": "^2.2.0",
+    "memoizee": "^0.4.5",
+    "nodeunit": "^0.11.1",
+    "p-retry": "^1.0.0",
+    "private-ip": "^1.0.5",
+    "promise-memoize": "^1.2.0",
+    "range": "0.0.3",
+    "stack-utils": "^1.0.1",
+    "xregexp": "^3.2.0",
+    "zlib": "^1.0.5"
+  }
+}

@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+   - source: lib
+     destination: /opt/server/lib
+   - source: node_modules
+     destination: /opt/server/node_modules
+   - source: server.js
+     destination: /opt/server/
+   - source: package.json
+     destination: /opt/server/
+hooks:
+  ApplicationStop:
+    - location: stop.sh
+  ApplicationStart:
+    - location: start.sh
+  ValidateService:
+    - location: validate.sh

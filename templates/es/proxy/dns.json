@@ -1,0 +1,84 @@
+{
+"ZoneNameLambda": {
+  "Type": "AWS::Lambda::Function",
+  "Properties": {
+    "Code": {
+      "S3Bucket": {"Ref":"BootstrapBucket"},
+      "S3Key": "lambda/cfn-ZoneName.zip"
+    },
+    "Handler": "index.handler",
+    "MemorySize": "128",
+    "Role": {"Fn::GetAtt": ["ZoneNameRole","Arn"]},
+    "Runtime": "nodejs6.10",
+    "Timeout": 60,
+    "Tags":[{
+        "Key":"name",
+        "Value":"geotag-cfn-ZoneName"
+    }]
+  }
+},
+"ZoneNamePolicy":{
+    "Type": "AWS::IAM::ManagedPolicy",
+    "Properties": {
+        "PolicyDocument":{
+            "Version": "2012-10-17",
+            "Statement": [{
+              "Effect": "Allow",
+              "Action": [
+                "route53:GetHostedZone"
+              ],
+              "Resource": [
+                "*"
+              ]
+            }]
+        }
+    }
+},
+"ZoneNameRole": {
+  "Type": "AWS::IAM::Role",
+  "Properties": {
+    "AssumeRolePolicyDocument": {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "Service": "lambda.amazonaws.com"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    },
+    "Path": "/",
+    "ManagedPolicyArns": [
+      "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+      {"Ref":"ZoneNamePolicy"}
+    ]
+  }
+},
+"ZoneName":{
+    "Type": "Custom::ZoneName",
+    "Properties": {
+        "ServiceToken":{"Fn::GetAtt":["ZoneNameLambda","Arn"]},
+        "HostedZoneId":{"Ref":"ZoneId"}
+    }
+},
+"URL":{
+  "Type" : "AWS::Route53::RecordSet",
+  "Properties" : {
+    "AliasTarget" : {
+        "DNSName" : {"Fn::GetAtt":["ELB","DNSName"]},
+        "HostedZoneId" :{"Fn::GetAtt":["ELB","CanonicalHostedZoneNameID"]} 
+    },
+    "HostedZoneId" : {"Ref":"ZoneId"},
+    "Name" : {"Fn::Join":[".",[
+        {"Fn::Join":["-",[
+            "kibana",
+            {"Ref":"UrlPostfix"}
+        ]]},
+        {"Fn::GetAtt":["ZoneName","name"]}
+    ]]},
+    "Type" : "A"
+  }
+}}
+

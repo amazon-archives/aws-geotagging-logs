@@ -1,0 +1,38 @@
+{
+        "Records": [
+            {
+                "eventVersion": "2.0",
+                "eventSource": "aws:s3",
+                "awsRegion": "us-west-2",
+                "eventTime": "2017-08-22T14:38:34.133Z",
+                "eventName": "ObjectCreated:Put",
+                "userIdentity": {
+                    "principalId": "AWS:AIDAJOB7LVUYCT73CHOYG"
+                },
+                "requestParameters": {
+                    "sourceIPAddress": "54.240.200.79"
+                },
+                "responseElements": {
+                    "x-amz-request-id": "1AD2F6A72C034415",
+                    "x-amz-id-2": "yZI0AuOHA8dvfwXxDibQS27OHWLzZ1aaexVBkDX7yF3QYZR2YycpJmPeSE0z+ya90A0YCJHRN50="
+                },
+                "s3": {
+                    "s3SchemaVersion": "1.0",
+                    "configurationId": "BucketNotificationConfigurationQuoGQ",
+                    "bucket": {
+                        "name": "vmware-master-50-master-bx64yhxr9z8m-inges-bucket-1815t0jmhgrs7",
+                        "ownerIdentity": {
+                            "principalId": "A3MJ1QADY2ZLXO"
+                        },
+                        "arn": "arn:aws:s3:::vmware-master-50-master-bx64yhxr9z8m-inges-bucket-1815t0jmhgrs7"
+                    },
+                    "object": {
+                        "key": "AWSLogs/613341023709/CloudTrail-Digest/ap-northeast-1/2017/08/22/613341023709_CloudTrail-Digest_ap-northeast-1_VMWARE-master-50-Master-BX64YHXR9Z8M-ingest-1QJ0RWE8XZIP7-Data-PNF2SVLS2JJY-Trail-1X68FZWKI4UBU_us-west-2_20170822T135013Z.json.gz",
+                        "size": 905,
+                        "eTag": "91648fd14dccb5ac00e4261b018bedf7",
+                        "sequencer": "00599C41E9F6E2BF1F"
+                    }
+                }
+            }
+        ]
+    }

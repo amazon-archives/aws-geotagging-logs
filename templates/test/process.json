@@ -1,0 +1,31 @@
+{
+  "Resources": {
+    "Logs" :{
+        "Type":"AWS::Logs::LogGroup",
+        "Properties" : {
+            "RetentionInDays" : 1
+        }
+    },
+    "Process":{
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+            "TemplateURL" : {"Fn::Join":["/",[
+                "https://s3.amazonaws.com",
+                {"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "templates/process.json"
+            ]]},
+            "Parameters":{
+                "BootstrapBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "DataBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "CloudtrailBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "ELBBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "CloudFrontBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "DataBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "FlowLogs":{"Ref":"Logs"}
+            }
+        }
+    }
+  },
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Test of the process template"
+}

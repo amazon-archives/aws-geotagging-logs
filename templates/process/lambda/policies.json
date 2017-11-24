@@ -1,0 +1,48 @@
+{
+"BucketPolicy2":{
+    "Type": "AWS::IAM::ManagedPolicy",
+    "Properties": {
+        "PolicyDocument":{
+            "Version": "2012-10-17",
+            "Statement": [{
+              "Effect": "Allow",
+              "Action": [
+                "cloudwatch:PutMetricData",
+                "logs:DescribeLogStreams",
+                "logs:PutLogEvents",
+                "ec2:DescribeNetworkInterfaces"
+              ],
+              "Resource": ["*"]
+            },{
+              "Effect": "Allow",
+              "Action": [
+                "s3:Get*"
+              ],
+              "Resource": [
+                {"Fn::Join":["",[ 
+                    "arn:aws:s3:::",
+                    {"Ref":"CloudtrailBucket"},
+                    "/*"
+                ]]},
+                {"Fn::Join":["",[ 
+                    "arn:aws:s3:::",
+                    {"Ref":"ELBBucket"},
+                    "/*"
+                ]]},
+                {"Fn::Join":["",[ 
+                    "arn:aws:s3:::",
+                    {"Ref":"CloudFrontBucket"},
+                    "/*"
+                ]]}
+              ]
+            }]
+        }
+    }
+}
+}
+
+
+
+
+
+           

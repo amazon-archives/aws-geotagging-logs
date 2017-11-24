@@ -1,0 +1,23 @@
+{
+    "WaitLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile":{"Fn::Join":["\n",[
+            "var response=require('cfn-response')",
+            "exports.handler=function(event,context,cb){",
+                "var params=event.ResourceProperties",
+                "setTimeout(",
+                    "()=>response.send(event,context,response.SUCCESS),",
+                    "1000*parseInt(params.time))",
+            "}"
+          ]]}
+        },
+        "Handler": "index.handler",
+        "MemorySize": "128",
+        "Role": {"Fn::GetAtt": ["Role","Arn"]},
+        "Runtime": "nodejs6.10",
+        "Timeout": 300
+      }
+    }
+}

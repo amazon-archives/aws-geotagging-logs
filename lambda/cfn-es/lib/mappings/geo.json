@@ -1,0 +1,16 @@
+{
+"type":"object",
+"properties":{
+    "continent_code":{"type":"string","index" : "not_analyzed"},
+    "country_code2":{"type":"string","index" : "not_analyzed"},
+    "country_name":{"type":"string","index" : "not_analyzed"},
+    "location":{
+        "type":"geo_point"
+    },
+    "dma_code":{"type":"string","index" : "not_analyzed"},
+    "timezone":{"type":"string","index" : "not_analyzed"},
+    "region_name":{"type":"string","index" : "not_analyzed"},
+    "real_region_name":{"type":"string","index" : "not_analyzed"},
+    "city_name":{"type":"string","index" : "not_analyzed"},
+    "postal_code":{"type":"string","index" : "not_analyzed"}
+}}

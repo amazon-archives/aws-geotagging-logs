@@ -1,0 +1,19 @@
+{
+  "Resources": {
+    "lambda":{
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+            "TemplateURL" : {"Fn::Join":["/",[
+                "https://s3.amazonaws.com",
+                {"Fn::ImportValue":"VMWARE-BOOTSTRAP-BUCKET"},
+                "templates/cfn-athena.json"
+            ]]},
+            "Parameters":{
+                "BootstrapBucket":{"Fn::ImportValue":"VMWARE-BOOTSTRAP-BUCKET"}
+            }
+        }
+    }
+  },
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Test of the athena cfn-lambda function"
+}

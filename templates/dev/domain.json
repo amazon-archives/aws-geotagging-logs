@@ -1,0 +1,85 @@
+{
+  "Conditions": {},
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "ElasticSearch Cluster",
+  "Outputs": {
+    "ConsoleUrl": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {"Ref": "AWS::Region"},
+            ".console.aws.amazon.com/es/home?",
+            "region=",
+            {"Ref": "AWS::Region"},
+            "#",
+            {"Ref": "Domain"},
+            ":dashboard"
+          ]
+        ]
+      }
+    },
+    "Arn":{
+        "Value":{"Fn::GetAtt":["Domain","DomainArn"]},
+        "Export":{
+            "Name":"GEOTAG-DEV-ES-ARN"
+        }
+    },
+    "Address":{
+        "Value":{"Fn::GetAtt":["Domain","DomainEndpoint"]},
+        "Export":{
+            "Name":"GEOTAG-DEV-ES-ADDRESS"
+        }
+    },
+    "Policy":{
+        "Value":{"Ref":"Policy"},
+        "Export":{
+            "Name":"GEOTAG-DEV-ES-POLICY"
+        }
+    }
+  },
+  "Resources": {
+    "Domain": {
+      "Type": "AWS::Elasticsearch::Domain",
+      "Properties": {
+        "ElasticsearchClusterConfig": {
+          "DedicatedMasterEnabled": false,
+          "InstanceCount": 1,
+          "InstanceType": "t2.small.elasticsearch",
+          "ZoneAwarenessEnabled": false
+        },
+        "EBSOptions": {
+          "EBSEnabled": true,
+          "VolumeSize": 10,
+          "VolumeType": "gp2"
+        },
+        "ElasticsearchVersion": "5.1",
+        "AdvancedOptions": {"rest.action.multi.allow_explicit_index": true}
+      }
+    },
+    "Policy": {
+      "Type": "AWS::IAM::ManagedPolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": ["es:*"],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "/",
+                    [{"Fn::GetAtt": ["Domain", "DomainArn"]}, "*"]
+                  ]
+                },
+                {"Fn::GetAtt": ["Domain", "DomainArn"]}
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

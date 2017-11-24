@@ -1,0 +1,56 @@
+{
+  "Conditions": {},
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Geotaging Dev Resource-cloudfront distribution",
+  "Resources": {
+    "Distribution": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Logging":{
+            "Bucket":{"Fn::Join":["",[
+                {"Fn::ImportValue":"GEOTAG-DEV-DATA-BUCKET"},
+                ".s3.amazonaws.com"
+            ]]}
+          },
+          "Origins": [
+            {
+              "DomainName": {"Fn::ImportValue":"GEOTAG-DEV-ELB-URL"},
+              "Id": "elb",
+              "CustomOriginConfig": {
+                "HTTPPort": 80,
+                "OriginProtocolPolicy": "http-only"
+              }
+            }
+          ],
+          "DefaultRootObject": "index.html",
+          "DefaultCacheBehavior": {
+            "Compress": true,
+            "DefaultTTL": 6,
+            "MaxTTL": 7,
+            "MinTTL": 5,
+            "TargetOriginId": "elb",
+            "ViewerProtocolPolicy": "allow-all",
+            "ForwardedValues": {
+                "QueryString": true,
+                "Headers":["Authorization"]
+            }
+          },
+          "Enabled": true
+        }
+      }
+    },
+    "traffic": {
+      "Type": "AWS::Route53::HealthCheck",
+      "Properties": {
+        "HealthCheckConfig": {
+          "FailureThreshold": 2,
+          "FullyQualifiedDomainName": {"Fn::GetAtt": ["Distribution","DomainName"]},
+          "Port": 80,
+          "ResourcePath": "/",
+          "Type": "HTTP"
+        }
+      }
+    }
+  }
+}

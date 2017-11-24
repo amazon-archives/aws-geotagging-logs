@@ -1,0 +1,17 @@
+{
+  "name": "proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "AWS_PROFILE=$(../../bin/profile.js) nodeunit ./test/index.js",
+    "unit": "AWS_PROFILE=$(../../bin/profile.js) nodeunit ./test/index.js -t"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cfn-lambda": "^0.8.3",
+    "handlebars": "^4.0.10",
+    "nodeunit": "^0.11.1"
+  }
+}

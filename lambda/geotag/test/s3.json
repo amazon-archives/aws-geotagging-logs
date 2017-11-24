@@ -1,0 +1,38 @@
+{
+    "Records": [
+        {
+            "eventVersion": "2.0",
+            "eventSource": "aws:s3",
+            "awsRegion": "us-west-2",
+            "eventTime": "2017-08-20T01:45:18.070Z",
+            "eventName": "ObjectCreated:Put",
+            "userIdentity": {
+                "principalId": "AWS:AROAI6ZMWVXR3IZ6MKNSW:i-0e3081c000eea9cc1"
+            },
+            "requestParameters": {
+                "sourceIPAddress": "52.90.253.215"
+            },
+            "responseElements": {
+                "x-amz-request-id": "EB46E87F1BD36647",
+                "x-amz-id-2": "zQPW6plPwz23lEmtx005NuJg4+7XW5mTa3PX40UTIL+piU4meDUkbupMflMmtR7mMxZ/8nHbxRM="
+            },
+            "s3": {
+                "s3SchemaVersion": "1.0",
+                "configurationId": "BucketNotificationConfigurationnIMal",
+                "bucket": {
+                    "name": "vmware-master-45-master-1swiwk4squyx2-inge-bucket-h1i74ga3oxw4",
+                    "ownerIdentity": {
+                        "principalId": "A3MJ1QADY2ZLXO"
+                    },
+                    "arn": "arn:aws:s3:::vmware-master-45-master-1swiwk4squyx2-inge-bucket-h1i74ga3oxw4"
+                },
+                "object": {
+                    "key": "AWSLogs/613341023709/CloudTrail/us-east-1/2017/08/20/613341023709_CloudTrail_us-east-1_20170820T0140Z_p4q7s1uJldawonbS.json.gz",
+                    "size": 959,
+                    "eTag": "ea15560a672ce530b054d0d60216b129",
+                    "sequencer": "005998E9ADEC404441"
+                }
+            }
+        }
+    ]
+}

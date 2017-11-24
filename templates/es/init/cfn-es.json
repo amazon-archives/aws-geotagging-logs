@@ -1,0 +1,112 @@
+{
+    "KibanaLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {"Ref":"BootstrapBucket"},
+          "S3Key":"lambda/cfn-kibana.zip"
+        },
+        "Environment": {
+          "Variables": {
+            "ADDRESS":{"Ref":"ESAddress"}
+          }
+        },
+        "Handler": "index.handler",
+        "MemorySize": "128",
+        "Role": {
+          "Fn::GetAtt": [
+            "ESInitRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs6.10",
+        "Timeout": 300
+      }
+    },
+    "ESLambda": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {"Ref":"BootstrapBucket"},
+          "S3Key":"lambda/cfn-es.zip"
+        },
+        "Environment": {
+          "Variables": {
+            "REGION": {"Ref": "AWS::Region"},
+            "ADDRESS":{"Ref":"ESAddress"}
+          }
+        },
+        "Handler": "index.handler",
+        "MemorySize": "128",
+        "Role": {
+          "Fn::GetAtt": [
+            "ESInitRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs6.10",
+        "Timeout": 300
+      }
+    },
+    "ESInitPolicy":{
+        "Type": "AWS::IAM::ManagedPolicy",
+        "Properties": {
+            "PolicyDocument":{
+                "Version": "2012-10-17",
+                "Statement": [{
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:Get*"
+                  ],
+                  "Resource": [
+                    {"Fn::Join":["",[ 
+                        "arn:aws:s3:::",
+                        {"Ref":"BootstrapBucket"},
+                        "/*"
+                    ]]}
+                  ]
+                },{
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:*"
+                  ],
+                  "Resource": ["*"]
+                },{
+                  "Effect": "Allow",
+                  "Action": [
+                    "es:*"
+                  ],
+                  "Resource": [
+                    {"Ref":"DomainArn"},
+                    {"Fn::Join":["",[
+                        {"Ref":"DomainArn"},
+                        "/*"
+                    ]]}
+                  ]
+                }]
+            },
+            "Roles":[{"Ref":"ESInitRole"}]
+        }
+    },
+    "ESInitRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Path": "/",
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        ]
+      }
+    }
+}

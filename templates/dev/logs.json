@@ -1,0 +1,32 @@
+{
+  "Resources": {
+    "LogGroup" :{
+        "Type":"AWS::Logs::LogGroup",
+        "Properties" : {
+            "RetentionInDays" : 1
+        }
+    },
+    "LogStream" :{
+        "Type" : "AWS::Logs::LogStream",
+        "Properties" : {
+            "LogGroupName" : {"Ref":"LogGroup"}
+        }
+    }
+  },
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Dev log resources",
+  "Outputs": {
+    "LogStream":{
+        "Value":{"Ref":"LogStream"},
+        "Export":{
+            "Name":"GEOTAG-DEV-LOG-STREAM"
+        }
+    },
+    "LogGroup":{
+        "Value":{"Ref":"LogGroup"},
+        "Export":{
+            "Name":"GEOTAG-DEV-LOG-GROUP"
+        }
+    }
+  }
+}

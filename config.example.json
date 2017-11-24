@@ -1,0 +1,6 @@
+{
+    "region":"us-west-2",
+    "profile":"default",
+    "Cert":"arn:aws:acm:us-west-2:613341023709:certificate/d1736f73-ab3b-4719-8eb1-2732b012c374",
+    "ZoneId":"ZRDPXHU04D1LQ"
+}

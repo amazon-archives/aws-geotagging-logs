@@ -1,0 +1,20 @@
+{
+  "Resources": {
+    "athena":{
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+            "TemplateURL" : {"Fn::Join":["/",[
+                "https://s3.amazonaws.com",
+                {"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "templates/athena.json"
+            ]]},
+            "Parameters":{
+                "BootstrapBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"},
+                "DataBucket":{"Fn::ImportValue":"GEOTAG-BOOTSTRAP-BUCKET"}
+            }
+        }
+    }
+  },
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Test of the athena database"
+}

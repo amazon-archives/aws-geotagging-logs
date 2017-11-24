@@ -1,0 +1,21 @@
+#! /bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+BUCKET=$($DIR/exports.js | jq --raw-output '."GEOTAG-BOOTSTRAP-BUCKET"')
+BLUE=$(tput setaf 4)
+RESET=$(tput sgr0)
+echo bootstrap bucket is $BLUE$BUCKET$RESET
+
+$DIR/upload-templates.sh &
+$DIR/build-codedeploy.sh &
+$DIR/build.js proxy & 
+$DIR/build.js kinesis &  
+$DIR/build.js domain &  
+$DIR/build.js avro &  
+$DIR/build.js data &
+$DIR/build.js lambda &
+$DIR/build.js athena &
+
+wait 
+cp -r $DIR/../templates $DIR/../build
+time aws s3 sync $DIR/../build s3://$BUCKET/ --delete 

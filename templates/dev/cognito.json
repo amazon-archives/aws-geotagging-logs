@@ -1,0 +1,57 @@
+{
+  "Resources": {
+    "IdPool": {
+      "Type": "AWS::Cognito::IdentityPool",
+      "Properties": {
+        "IdentityPoolName": "UserPool",
+        "AllowUnauthenticatedIdentities": true,
+        "CognitoIdentityProviders": [
+          {
+            "ClientId": {"Ref": "Client"},
+            "ProviderName": {"Fn::GetAtt": ["UserPool","ProviderName"]},
+            "ServerSideTokenCheck": true
+          }
+        ]
+      }
+    },
+    "UserPool": {
+      "Type": "AWS::Cognito::UserPool",
+      "Properties": {
+        "UserPoolName": {"Fn::Join": ["-",[
+              "UserPool",
+              {"Ref": "AWS::StackName"}
+        ]]}
+      }
+    },
+    "Client": {
+      "Type": "AWS::Cognito::UserPoolClient",
+      "Properties": {
+        "ClientName": {"Fn::Join": ["-",[
+            "UserPool",
+            {"Ref": "AWS::StackName"}
+        ]]},
+        "GenerateSecret": false,
+        "ExplicitAuthFlows":["ADMIN_NO_SRP_AUTH"],
+        "UserPoolId": {"Ref": "UserPool"}
+      }
+    }
+  },
+  "Conditions": {},
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "dev cognito pool for cfn-user lambda testing",
+  "Mappings": {},
+  "Outputs": {
+    "PoolId":{
+      "Value":{"Ref":"IdPool"},
+      "Export":{"Name":"GEOTAG-COGNITO-POOL-ID"}
+    },
+    "UserPool":{
+      "Value":{"Ref":"UserPool"},
+      "Export":{"Name":"GEOTAG-COGNITO-USER-POOL"}
+    },
+    "Client":{
+      "Value":{"Ref":"Client"},
+      "Export":{"Name":"GEOTAG-COGNITO-CLIENT"}
+    }
+  }
+}

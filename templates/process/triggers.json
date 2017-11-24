@@ -1,0 +1,22 @@
+{
+"CloudwatchLambdaPermission":{
+    "Type" : "AWS::Lambda::Permission",
+    "Properties" : {
+        "Action" : "lambda:InvokeFunction",
+        "FunctionName" : {"Fn::GetAtt":["Lambda","Arn"]},
+        "Principal" : {"Fn::Join":[".",[
+            "logs",{"Ref":"AWS::Region"},"amazonaws.com"
+        ]]},
+        "SourceAccount":{"Ref":"AWS::AccountId"}
+    }
+},
+"CloudWatchTrigger":{
+    "Type" : "AWS::Logs::SubscriptionFilter",
+    "DependsOn":"CloudwatchLambdaPermission",
+    "Properties" : {
+        "DestinationArn" : {"Fn::GetAtt":["Lambda","Arn"]},
+        "FilterPattern" : "",
+        "LogGroupName" : {"Ref":"FlowLogs"}
+    }
+}
+}
