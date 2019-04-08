@@ -84,4 +84,5 @@ npm run test
 Some tests may require additional configuration to run properly.
 
 ## License
-See the [LICENSE.md](LICENSE.md) file for details
+
+This sample code is made available under the MIT-0 license. See the LICENSE file.
