@@ -19,7 +19,7 @@
         "MemorySize": "128",
         "Role": {"Fn::GetAtt": ["Role","Arn"]
         },
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs10.x",
         "Timeout": 60
       }
     },
